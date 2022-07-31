@@ -1,0 +1,107 @@
+<apex:page standardController="Invoice__c" extensions="Invoice_PDF,ParamyterMetadata" standardStylesheets="false" renderAS="PDF">
+
+        <table style="width:100%; font-size:13px">
+        <tr>   <td><apex:image url="https://paramytertechprivatelimited--parabooks.sandbox.file.force.com/servlet/servlet.ImageServer?id=0159D000000Qlwx&oid=00D9D0000008jFu&lastMod=1657275445000" width="180" height="180" styleClass="imageStyle"/></td>   
+            <td style="width:65%">
+                 	<b>{!AccName}</b> 
+                    <br/>{!AccAdd1}
+            		<br/>{!AccMobNo}
+            		<br/>{!AccEmail} 
+            		<br/>{!AccWebsite}
+            		<br/>GSTIN : {!AccGSTIN}
+            </td>
+            <!--<td style="width:20%"></td>-->
+        </tr>
+    </table>
+    
+    <h1 style="color:#5368F6">Tax Invoice </h1>
+    
+<table style="width:100%; font-size:13px">
+  <tr>
+    <th style="width:70%">Bill To : </th>
+    <th>Invoice No : </th> 
+    <td>{!InvoiceData.Name}</td>
+  </tr>
+  <tr>
+    <td>{!InvoiceData.Opportunity__r.Account.name}</td>
+    <th>Date : </th>
+    <td>{!InvoiceDate}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <th>DUE DATE</th>
+    <td>{!InvoiceDue}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <th>TERMS</th>
+    <td>{!InvoiceData.Term__c}</td>
+  </tr>
+  <tr>
+    <td>GSTIN : {!InvoiceData.Opportunity__r.Account.GSTIN_NO__c}</td>
+    <th></th>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PLACE OF SUPPLY:</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>{!InvoiceData.Place_of_Supply__c}</td>
+    <td></td>
+    <td></td>
+  </tr>
+    <br></br><br></br>
+</table>
+    <hr/><br></br>
+    <table style="width:100%; font-size:13px">
+        <tr>
+        <th>PERIOD</th>
+        <th>SAC</th>
+        </tr>
+        <tr>
+            <td>01/03/2022</td>
+            <td>TEST</td>
+        </tr>
+    </table>
+    <br></br>
+<table style="width:100%; font-size:13px">
+  <tr style="background-color:#3F8CBF">
+    <th>NO.</th>
+      <th>HNS/SAC</th> 
+      <th>DATE</th>
+      <th>DESCRIPTION</th>
+      <th>TAX</th>
+      <th>UNIT</th>
+      <th>QTY</th>
+      <th>RATE</th>
+      <th>AMOUNT</th>
+  </tr>
+  <apex:repeat value="{!InvoiceLinelist}" var="List_items"> 
+    <tr>
+      <td>1</td>
+      <td>{!List_items.SAC_HSN_Code__c}</td> 
+      <td>{!List_items.Date__c}</td>
+      <td>{!List_items.Description__c}</td>
+      <td>{!List_items.Tax__c}</td>
+      <td>{!List_items.Unit__c}</td>
+      <td>{!List_items.Quantity__c}</td>
+      <td>{!List_items.NetAmount__c}</td>
+      <td>{!List_items.Gross_Amount__c}</td>
+  </tr>
+    </apex:repeat>
+</table>
+   <br></br><hr/>
+
+    <table style="width:100%; font-size:13px">
+        <tr>   <td>Please use the below details for payment</td>   <th>SUBTOTAL: </th>                 <th>INR</th> </tr>
+        <tr>   <td>Account Name : {!AccName}</td>   					       <td>IGST @ 18% on 229999.80</td>  <td></td>    </tr>
+        <tr>   <td>PAN : {!PAN}</td> 						        	   <td>TOTAL</td>                    <td></td>	</tr>
+        <tr>   <td>TAN : {!TAN}</td>         						       <td>ROUND OF AMOUNT: </td>          <td>{!InvoiceData.Total_Amount_Including_GST__c}</td>	</tr>
+        <tr>   <td>Account : {!AccNo}</td>    						       <td>BALANCE DUE</td>              <td></td>	</tr>
+        <tr>   <td>IFSC Code : {!AccIFSC}</td>        						   <td></td>                         <td></td>	</tr>
+        <tr>   <td>Account Type : {!AccType}</td>      						   <td></td>                         <td></td>	</tr>
+        <tr>   <td>BANK NAME : {!AccBankName}</td>       					       <td></td>                         <td></td>	</tr>
+    </table>
+</apex:page>
